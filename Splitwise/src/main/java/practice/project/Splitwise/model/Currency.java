@@ -1,5 +1,5 @@
-package practice.project.Splitwise.model;
+package practice.project.splitwise.model;
 
 public enum Currency {
-    INR, DOLLAR, DIRAM, YUAN, POUND
+    INR, DOLLAR, POUND, DINNAR, EURO, YEN;
 }

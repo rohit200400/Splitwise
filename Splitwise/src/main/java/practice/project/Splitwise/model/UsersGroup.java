@@ -1,4 +1,4 @@
-package practice.project.Splitwise.model;
+package practice.project.splitwise.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientGroup extends baseModel {
+public class UsersGroup extends BaseModel {
     private String name;
     private String description;
     private double totalAmountSpent;
@@ -26,9 +26,9 @@ public class ClientGroup extends baseModel {
 
     @ManyToMany
     @JoinTable(
-            name = "client_clientgroup",
-            joinColumns = @JoinColumn(name = "clientgroup_id"),
-            inverseJoinColumns = @JoinColumn(name = "client_id")
+            name = "user_group_mapping",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<Client> clients;
+    private List<Users> users;
 }

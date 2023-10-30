@@ -1,4 +1,4 @@
-package practice.project.Splitwise.model;
+package practice.project.splitwise.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,28 +11,16 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class baseModel {
+public abstract class BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @CreatedDate
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private Date createDate;
 
     @LastModifiedDate
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Date lastModifiedAt;
-
-    @PrePersist
-    public void prePersist() {
-        Date currentDate = new Date();
-        this.createdAt = currentDate;
-        this.lastModifiedAt = currentDate;
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        this.lastModifiedAt = new Date();
-    }
+    private Date updateDate;
 }

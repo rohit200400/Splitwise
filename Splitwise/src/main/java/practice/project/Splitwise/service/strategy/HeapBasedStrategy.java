@@ -1,38 +1,42 @@
-package practice.project.Splitwise.service;
+package practice.project.splitwise.service.strategy;
 
-import practice.project.Splitwise.dto.TransactionDTO;
-import practice.project.Splitwise.model.Client;
-import practice.project.Splitwise.model.Expense;
-import practice.project.Splitwise.model.UsersSplit;
+import practice.project.splitwise.dto.TransactionDTO;
+import practice.project.splitwise.model.Expense;
+import practice.project.splitwise.model.Users;
+import practice.project.splitwise.model.UsersSplit;
 
 import java.util.*;
 
-public interface settleStrategy {
-    default List<TransactionDTO> settleUP(List<Expense> expenses, List<Client> users) {
+public class HeapBasedStrategy implements SettleUpStrategy {
+    @Override
+    public List<TransactionDTO> settleUp(List<Expense> expenses) {
         List<TransactionDTO> transactions = new ArrayList<>();
-        HashMap<Client, Double> individualAmounts = new HashMap<>();
+        HashMap<Users, Double> individualAmounts = new HashMap<>();
         for (Expense expense : expenses) {
             for (UsersSplit userSplit : expense.getAmountSplit()) {
                 if (individualAmounts.containsKey(userSplit.getUser())) {
                     individualAmounts.put(userSplit.getUser(),
                             individualAmounts.get(userSplit.getUser()) +
                                     userSplit.getAmount());
+                } else {
+                    individualAmounts.put(userSplit.getUser(),
+                            userSplit.getAmount());
                 }
             }
         }
 
         //MaxHeap -> contains all the users with positive balance
-        PriorityQueue<Map.Entry<Client, Double>> maxHeap = new PriorityQueue<>(
+        PriorityQueue<Map.Entry<Users, Double>> maxHeap = new PriorityQueue<>(
                 (a, b) -> Double.compare(b.getValue(), a.getValue())
         );
 
         //MinHeap -> contains all the users with negative balance
-        PriorityQueue<Map.Entry<Client, Double>> minHeap = new PriorityQueue<>(
+        PriorityQueue<Map.Entry<Users, Double>> minHeap = new PriorityQueue<>(
                 Comparator.comparingDouble(Map.Entry::getValue)
         );
 
         //populate the heaps using the values from the map
-        for (Map.Entry<Client, Double> entry : individualAmounts.entrySet()) {
+        for (Map.Entry<Users, Double> entry : individualAmounts.entrySet()) {
             if (entry.getValue() < 0) {
                 minHeap.add(entry);
             } else if (entry.getValue() > 0) {
@@ -43,11 +47,11 @@ public interface settleStrategy {
         }
 
         while (!minHeap.isEmpty()) {
-            Map.Entry<Client, Double> sender = minHeap.poll();
-            Map.Entry<Client, Double> receiver = maxHeap.poll();
+            Map.Entry<Users, Double> sender = minHeap.poll();
+            Map.Entry<Users, Double> receiver = maxHeap.poll();
             TransactionDTO transactionDTO = new TransactionDTO();
-            transactionDTO.setSender(sender.getKey());
-            transactionDTO.setReceiver(receiver.getKey());
+            transactionDTO.setToUserName(sender.getKey().getName());
+            transactionDTO.setFromUserName(receiver.getKey().getName());
 
             if (receiver.getValue() - sender.getValue() < 0) {
                 sender.setValue(sender.getValue() + receiver.getValue());

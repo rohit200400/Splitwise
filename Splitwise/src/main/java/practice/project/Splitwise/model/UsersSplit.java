@@ -1,19 +1,20 @@
-package practice.project.Splitwise.model;
+package practice.project.splitwise.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class UsersSplit extends baseModel {
-
+public class UsersSplit extends BaseModel {
     @OneToOne
-    private Client user;
+    private Users user;
 
     private double amount;
 }

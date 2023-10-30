@@ -1,13 +1,16 @@
-package practice.project.Splitwise.dto;
+package practice.project.splitwise.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import practice.project.Splitwise.model.Client;
 
 @Getter
 @Setter
+@AllArgsConstructor // parameterised constructor
+@NoArgsConstructor // default constructor
 public class TransactionDTO {
-    Client sender;
-    Client receiver;
-    Double amount;
+    private String fromUserName;
+    private String toUserName;
+    private double amount;
 }
