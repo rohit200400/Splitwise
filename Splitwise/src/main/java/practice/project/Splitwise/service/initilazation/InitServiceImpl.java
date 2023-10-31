@@ -65,7 +65,7 @@ public class InitServiceImpl implements InitService {
         List<Expense> expenses = new ArrayList<>();
 
         Expense expense1 = new Expense(100.0, "snacks", user1);
-        expense1.splitEqually(List.of(savedUser1, savedUser2, savedUser3, savedUser4, savedUser5));
+        expense1 = expense1.splitEqually(List.of(savedUser1, savedUser2, savedUser3, savedUser4, savedUser5));
         expenses.add(expense1);
         for (UsersSplit split: expense1.getAmountSplit()
              ) {

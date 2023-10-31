@@ -29,8 +29,6 @@ public class Expense extends BaseModel {
         this.amount = amount;
         this.description = description;
         this.paidBy = paidBy;
-        this.amountSplit = new ArrayList<>();
-        amountSplit.add(new UsersSplit(paidBy, amount));
     }
 
 
@@ -43,11 +41,10 @@ public class Expense extends BaseModel {
         double eachSplitAmount = this.getAmount() / totalSplits;
 
         List<UsersSplit> usersSplits = new ArrayList<>();
+        usersSplits.add(new UsersSplit(this.paidBy, this.amount));
         for (Users u : users
         ) {
-            if (!u.equals(this.paidBy)) {
-                usersSplits.add(new UsersSplit(u, -1 * eachSplitAmount));
-            }
+            usersSplits.add(new UsersSplit(u, -1 * eachSplitAmount));
         }
         this.setAmountSplit(usersSplits);
         return this;

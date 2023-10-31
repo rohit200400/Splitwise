@@ -50,8 +50,8 @@ public class HeapBasedStrategy implements SettleUpStrategy {
             Map.Entry<Users, Double> sender = minHeap.poll();
             Map.Entry<Users, Double> receiver = maxHeap.poll();
             TransactionDTO transactionDTO = new TransactionDTO();
-            transactionDTO.setToUserName(sender.getKey().getName());
-            transactionDTO.setFromUserName(receiver.getKey().getName());
+            transactionDTO.setFromUserName(sender.getKey().getName());
+            transactionDTO.setToUserName(receiver.getKey().getName());
 
             if (receiver.getValue() - sender.getValue() < 0) {
                 sender.setValue(sender.getValue() + receiver.getValue());
