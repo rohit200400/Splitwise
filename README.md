@@ -8,6 +8,9 @@ This repository contains a Spring-based REST API that serves as a clone of the p
 - Expense management: Add expenses within a group.
 - SettleUp management: Gives the minimum number of transactions between group members to settle up.
 
+## Demo Link
+   'https://www.loom.com/share/6e93a85cb6454541b8970807580ed09d?sid=89ae9bfd-2fe6-408d-9cd4-2bf9fe76322f'
+
 ## Getting Started
 Follow the steps below to get the API up and running on your local machine:
 
