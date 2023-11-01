@@ -9,6 +9,7 @@ import java.util.List;
 @Setter
 @Getter
 public class GroupCreationResponseDTO {
+    private Integer id;
     private String name;
     private String description;
     private Currency currency;

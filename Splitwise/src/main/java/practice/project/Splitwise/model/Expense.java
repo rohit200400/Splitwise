@@ -20,6 +20,7 @@ import java.util.List;
 public class Expense extends BaseModel {
     private double amount;
     private String description;
+    private Settled isSettled;
     @ManyToOne
     private Users paidBy;
 

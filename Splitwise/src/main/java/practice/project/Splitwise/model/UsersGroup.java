@@ -17,7 +17,8 @@ public class UsersGroup extends BaseModel {
     private String name;
     private String description;
     private double totalAmountSpent;
-
+    @Enumerated(EnumType.STRING)
+    private Settled isSettled;
     @Enumerated(EnumType.STRING)
     private Currency defaultCurrency;
 
