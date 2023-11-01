@@ -1,6 +1,6 @@
 package practice.project.splitwise.exception;
 
-public class GroupNotFoundException extends Exception{
+public class GroupNotFoundException extends Exception {
     public GroupNotFoundException() {
     }
 

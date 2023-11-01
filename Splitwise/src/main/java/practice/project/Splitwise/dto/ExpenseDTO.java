@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class TransactionDTO {
-    private String fromUserName;
-    private String toUserName;
+@AllArgsConstructor
+public class ExpenseDTO {
     private double amount;
+    private String description;
+    private String userName;
 }

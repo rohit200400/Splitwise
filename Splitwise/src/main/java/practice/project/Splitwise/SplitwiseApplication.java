@@ -18,7 +18,7 @@ public class SplitwiseApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Runner from commandLine");
-        initService.initialise();
+        //initService.initialise();
         System.out.println("Runner from commandLine finished");
     }
 }

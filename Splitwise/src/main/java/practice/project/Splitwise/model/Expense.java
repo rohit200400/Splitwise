@@ -1,6 +1,7 @@
 package practice.project.splitwise.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 public class Expense extends BaseModel {
     private double amount;
     private String description;
-    @OneToOne
+    @ManyToOne
     private Users paidBy;
 
     @OneToMany
@@ -29,6 +30,9 @@ public class Expense extends BaseModel {
         this.amount = amount;
         this.description = description;
         this.paidBy = paidBy;
+        ArrayList<UsersSplit> newUserSplit = new ArrayList<>();
+        newUserSplit.add(new UsersSplit(paidBy, amount));
+        this.amountSplit = newUserSplit;
     }
 
 

@@ -67,8 +67,8 @@ public class InitServiceImpl implements InitService {
         Expense expense1 = new Expense(100.0, "snacks", user1);
         expense1 = expense1.splitEqually(List.of(savedUser1, savedUser2, savedUser3, savedUser4, savedUser5));
         expenses.add(expense1);
-        for (UsersSplit split: expense1.getAmountSplit()
-             ) {
+        for (UsersSplit split : expense1.getAmountSplit()
+        ) {
             usersSplitRepo.save(split);
         }
         expenseRepo.save(expense1);
@@ -77,12 +77,12 @@ public class InitServiceImpl implements InitService {
         Expense expense2 = new Expense(1000.0, "food", user2);
         expense2.splitEqually(List.of(savedUser1, savedUser2, savedUser3, savedUser4, savedUser5));
         expenses.add(expense2);
-        for (UsersSplit split: expense2.getAmountSplit()
+        for (UsersSplit split : expense2.getAmountSplit()
         ) {
             usersSplitRepo.save(split);
         }
         expenseRepo.save(expense2);
-
+        savedGroup.setTotalAmountSpent(expense1.getAmount() + expense2.getAmount());
         savedGroup.setExpenses(expenses);
         groupRepo.save(savedGroup);
     }
