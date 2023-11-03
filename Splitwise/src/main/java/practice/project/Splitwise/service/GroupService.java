@@ -14,7 +14,7 @@ public interface GroupService {
     GroupCreationResponseDTO createGroup(GroupCreationDTO groupData);
 
     ExpenseResponseDTO addExpense(ExpenseReceivingDTO expenseData) throws UserNotFoundException,
-    GroupNotFoundException, UserNotMemberOfGroupException;
+            GroupNotFoundException, UserNotMemberOfGroupException;
 
     void groupSettled(SettledDTO settledDTO) throws UserNotFoundException,
             GroupNotFoundException, UserNotMemberOfGroupException;

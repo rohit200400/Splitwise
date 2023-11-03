@@ -1,6 +1,6 @@
 package practice.project.splitwise.exception;
 
-public class UserNotMemberOfGroupException extends Exception{
+public class UserNotMemberOfGroupException extends Exception {
     public UserNotMemberOfGroupException() {
     }
 

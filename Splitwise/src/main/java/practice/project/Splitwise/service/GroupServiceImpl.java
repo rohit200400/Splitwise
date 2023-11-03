@@ -35,8 +35,8 @@ public class GroupServiceImpl implements GroupService {
     public List<TransactionDTO> settleUpByGroupId(int groupId, int userId) throws UserNotFoundException, GroupNotFoundException, UserNotMemberOfGroupException {
         // check if valid user exist
         Optional<Users> currUser = userRepo.findById(userId);
-        if(currUser.isEmpty()){
-            throw new UserNotFoundException("Paid user not found in the database.");
+        if (currUser.isEmpty()) {
+            throw new UserNotFoundException("User not found in the database.");
         }
         // check if valid group exist
         Optional<UsersGroup> savedGroup = groupRepository.findById(groupId);
@@ -44,14 +44,14 @@ public class GroupServiceImpl implements GroupService {
             throw new GroupNotFoundException("Group for the given id was not found. Id : " + groupId);
         }
         // check if user is member of group
-        if(!currUser.get().getUsersGroups().contains(savedGroup.get())) {
-            throw new UserNotMemberOfGroupException("User who paid is not a member of group.");
+        if (!currUser.get().getUsersGroups().contains(savedGroup.get())) {
+            throw new UserNotMemberOfGroupException("User is not a member of group.");
         }
 
         // if all validations passed
         SettleUpStrategy strategy = SettleUpFactory.getSettleUpStrategy(SettleUpStrategyType.HeapBased);
         List<Expense> unsettledExpense = savedGroup.get().getExpenses().stream()
-                .filter(expense -> expense.getIsSettled()!=Settled.SETTLED)
+                .filter(expense -> expense.getIsSettled() != Settled.SETTLED)
                 .collect(Collectors.toList());
 
         return strategy.settleUp(unsettledExpense);
@@ -100,18 +100,17 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public ExpenseResponseDTO addExpense(ExpenseReceivingDTO expenseData) throws UserNotFoundException,
-    GroupNotFoundException, UserNotMemberOfGroupException{
+            GroupNotFoundException, UserNotMemberOfGroupException {
         // validations of group and User
-        Optional<Users> payingUser = userRepo.findById(expenseData.getPaidByUserID());
-        if(payingUser.isEmpty()){
-            throw new UserNotFoundException("Paid user not found in the database.");
-        }
-
         Optional<UsersGroup> group = groupRepository.findById(expenseData.getGroupID());
-        if(group.isEmpty()) {
+        if (group.isEmpty()) {
             throw new GroupNotFoundException("Group not found in the database.");
         }
-        if(!payingUser.get().getUsersGroups().contains(group.get())) {
+        Optional<Users> payingUser = userRepo.findById(expenseData.getPaidByUserID());
+        if (payingUser.isEmpty()) {
+            throw new UserNotFoundException("Paid user not found in the database.");
+        }
+        if (!payingUser.get().getUsersGroups().contains(group.get())) {
             throw new UserNotMemberOfGroupException("User who paid is not a member of group.");
         }
 
@@ -120,10 +119,10 @@ public class GroupServiceImpl implements GroupService {
         for (UserSplitReceivingDTO split : expenseData.getUserSplit()
         ) {
             Optional<Users> currUser = userRepo.findById(split.getUserId());
-            if(currUser.isEmpty()){
+            if (currUser.isEmpty()) {
                 throw new UserNotFoundException("User not found in the database.");
             }
-            if(!currUser.get().getUsersGroups().contains(group.get())) {
+            if (!currUser.get().getUsersGroups().contains(group.get())) {
                 throw new UserNotMemberOfGroupException("User who paid is not a member of group.");
             }
             usersSplits.add(new UsersSplit(currUser.get(), -1 * split.getAmount()));
@@ -173,23 +172,23 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void groupSettled(SettledDTO settledDTO) throws UserNotFoundException,
-            GroupNotFoundException, UserNotMemberOfGroupException{
+            GroupNotFoundException, UserNotMemberOfGroupException {
         // validations of group and User
         Optional<Users> user = userRepo.findById(settledDTO.getUserId());
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             throw new UserNotFoundException("Paid user not found in the database.");
         }
 
         Optional<UsersGroup> group = groupRepository.findById(settledDTO.getGroupId());
-        if(group.isEmpty()) {
+        if (group.isEmpty()) {
             throw new GroupNotFoundException("Group not found in the database.");
         }
-        if(!user.get().getUsersGroups().contains(group.get())) {
+        if (!user.get().getUsersGroups().contains(group.get())) {
             throw new UserNotMemberOfGroupException("User who paid is not a member of group.");
         }
         group.get().setIsSettled(Settled.SETTLED);
-        for (Expense expense: group.get().getExpenses()
-             ) {
+        for (Expense expense : group.get().getExpenses()
+        ) {
             expense.setIsSettled(Settled.SETTLED);
             expenseRepo.save(expense);
         }
