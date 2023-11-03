@@ -1,7 +1,7 @@
 # Splitwise Clone API
 
 ## Overview
-This repository contains a Spring-based REST API that serves as a clone of the popular Splitwise application. Splitwise is a widely-used expense-sharing application that simplifies sharing expenses with friends and roommates. This API provides essential functionality for managing expenses, groups, users, and transactions, making it a solid foundation for building a Splitwise-like application.
+This repository contains a Spring-based REST API that serves as a clone of the popular Splitwise application. Splitwise is a widely-used expense-sharing application that simplifies sharing expenses with friends and roommates. This API provides essential functionality for managing expenses, groups, users, and transactions, making it a solid foundation for building a Splitwise-like application. There is a global Exception handler for handelling exceptions.
 
 ## Features
 - Group management: Create groups for expense sharing.
